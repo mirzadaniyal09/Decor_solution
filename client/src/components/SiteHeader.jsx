@@ -80,9 +80,9 @@ export default function SiteHeader() {
                         <IconSearch />
                     </button>
 
-                    <Link to="/" className="logo" aria-label="Decor Solution Home">
-                        <span className="logoMark">Decor</span>
-                        <span className="logoMark">Solution</span>
+                    <Link to="/" className="logo" aria-label="Alif Store Home">
+                        <span className="logoMark">Alif</span>
+                        <span className="logoMark">Store</span>
                     </Link>
 
                     <div className="topbarRight">

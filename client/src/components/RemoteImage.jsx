@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import imageUnavailable from '../assets/image-unavailable.svg';
+import { getApiUrl } from '../lib/api.js';
 
 const DEFAULT_FALLBACK = imageUnavailable;
 
@@ -13,15 +14,15 @@ function normalizeSrc(input) {
     if (/^(data:|blob:)/i.test(raw)) return raw;
 
     // Already API-prefixed.
-    if (raw.startsWith('/api/')) return raw;
+    if (raw.startsWith('/api/')) return getApiUrl(raw);
 
     // Common stored variants for uploads.
-    if (raw.startsWith('/uploads/')) return `/api${raw}`;
-    if (raw.startsWith('uploads/')) return `/api/${raw}`;
+    if (raw.startsWith('/uploads/')) return getApiUrl(`/api${raw}`);
+    if (raw.startsWith('uploads/')) return getApiUrl(`/api/${raw}`);
 
     // If the DB stored just a filename, assume it lives under uploads.
     if (!raw.startsWith('/') && /\.(png|jpe?g|webp|gif|svg)$/i.test(raw)) {
-        return `/api/uploads/${raw}`;
+        return getApiUrl(`/api/uploads/${raw}`);
     }
 
     return raw;

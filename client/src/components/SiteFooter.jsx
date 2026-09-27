@@ -82,7 +82,7 @@ export default function SiteFooter() {
                 </div>
 
                 <div className="footerBottom">
-                    <div className="footerCopy">© {new Date().getFullYear()} Decor Solution</div>
+                    <div className="footerCopy">© {new Date().getFullYear()} Alif Store</div>
                     <div className="footerSocial" aria-label="Social links">
                         <a className="socialDot" href="#" aria-label="Facebook">
                             <IconFacebook />

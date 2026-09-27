@@ -2,8 +2,9 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import RemoteImage from './RemoteImage.jsx';
 import { IconPencil } from './Icons.jsx';
-import { apiGet, apiPost, apiPut } from '../lib/api.js';
+import { apiGet, apiPut } from '../lib/api.js';
 import { getStoredUser, isLoggedIn } from '../lib/auth.js';
+import { uploadMediaFiles } from '../lib/uploads.js';
 
 const AUTOPLAY_MS = 4000;
 
@@ -293,9 +294,7 @@ export default function Hero({ slides: slidesProp } = {}) {
                                         }
 
                                         try {
-                                            const form = new FormData();
-                                            form.append('files', file);
-                                            const uploaded = await apiPost('/api/uploads/product-media', form);
+                                            const uploaded = await uploadMediaFiles([file], 'admin');
                                             const url = uploaded?.files?.[0]?.url ? String(uploaded.files[0].url) : '';
                                             if (!url) throw new Error('Upload failed');
 

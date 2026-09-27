@@ -9,9 +9,11 @@
         "start": "node src/server.js",
         "seed": "node src/utils/seed.js",
         "migrate:categories": "node src/utils/migrateCategories.js",
-        "migrate:product-media": "node src/utils/migrateProductMediaToUploads.js"
+        "migrate:product-media": "node src/utils/migrateProductMediaToUploads.js",
+        "migrate:uploads-to-blob": "node src/utils/migrateUploadsToBlob.js"
     },
     "dependencies": {
+        "@vercel/blob": "^2.8.0",
         "bcryptjs": "^2.4.3",
         "cors": "^2.8.5",
         "decor-solution": "file:..",

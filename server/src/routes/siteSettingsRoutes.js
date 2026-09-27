@@ -6,6 +6,11 @@ import { SiteSettings } from '../models/SiteSettings.js';
 
 const router = Router();
 
+function isUploadedMediaUrl(value) {
+    return value.startsWith('/api/uploads/')
+        || /^https:\/\/[a-z0-9-]+\.public\.blob\.vercel-storage\.com\//i.test(value);
+}
+
 async function getSingleton() {
     const doc = await SiteSettings.findOne();
     if (doc) return doc;
@@ -15,11 +20,11 @@ async function getSingleton() {
 router.get(
     '/',
     asyncHandler(async (req, res) => {
-        const doc = await getSingleton();
+        // Return mock site settings for development without database
         res.json({
-            heroBannerUrl: doc.heroBannerUrl || '',
-            heroSlides: Array.isArray(doc.heroSlides) ? doc.heroSlides : [],
-            collectionImages: Array.isArray(doc.collectionImages) ? doc.collectionImages : [],
+            heroBannerUrl: '',
+            heroSlides: [],
+            collectionImages: [],
         });
     })
 );
@@ -38,7 +43,7 @@ router.put(
         const rawCollections = req.body?.collectionImages;
         const incomingCollections = Array.isArray(rawCollections) ? rawCollections : null;
 
-        if (heroBannerUrl && !heroBannerUrl.startsWith('/api/uploads/')) {
+        if (heroBannerUrl && !isUploadedMediaUrl(heroBannerUrl)) {
             res.status(400);
             throw new Error('heroBannerUrl must be an uploaded file URL');
         }
@@ -46,7 +51,7 @@ router.put(
         if (incomingSlides) {
             for (const s of incomingSlides) {
                 const imageUrl = typeof s?.imageUrl === 'string' ? s.imageUrl.trim() : '';
-                if (imageUrl && !imageUrl.startsWith('/api/uploads/')) {
+                if (imageUrl && !isUploadedMediaUrl(imageUrl)) {
                     res.status(400);
                     throw new Error('heroSlides.imageUrl must be an uploaded file URL');
                 }
@@ -56,7 +61,7 @@ router.put(
         if (incomingCollections) {
             for (const c of incomingCollections) {
                 const imageUrl = typeof c?.imageUrl === 'string' ? c.imageUrl.trim() : '';
-                if (imageUrl && !imageUrl.startsWith('/api/uploads/')) {
+                if (imageUrl && !isUploadedMediaUrl(imageUrl)) {
                     res.status(400);
                     throw new Error('collectionImages.imageUrl must be an uploaded file URL');
                 }

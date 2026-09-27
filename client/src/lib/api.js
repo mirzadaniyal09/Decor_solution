@@ -1,12 +1,18 @@
 import { getToken } from './auth.js';
 
+const API_BASE_URL = String(import.meta.env.VITE_API_BASE_URL || '').trim().replace(/\/+$/, '');
+
+export function getApiUrl(path) {
+    if (!API_BASE_URL || !String(path).startsWith('/api/')) return path;
+    return `${API_BASE_URL}${path}`;
+}
+
 export async function apiRequest(path, { method = 'GET', body, token } = {}) {
     const headers = {};
     const authToken = token ?? getToken();
     if (authToken) headers.Authorization = `Bearer ${authToken}`;
 
     // Avoid 304 (empty body) responses causing JSON parsing issues.
-    // This also makes dev behavior more predictable behind the Vite proxy.
     headers['Cache-Control'] = 'no-cache';
     headers.Pragma = 'no-cache';
 
@@ -23,14 +29,14 @@ export async function apiRequest(path, { method = 'GET', body, token } = {}) {
 
     let res;
     try {
-        res = await fetch(path, {
+        res = await fetch(getApiUrl(path), {
             method,
             headers,
             body: requestBody,
             cache: 'no-store',
         });
     } catch {
-        throw new Error('API not reachable. Start the server on http://127.0.0.1:5000');
+        throw new Error(`API not reachable${API_BASE_URL ? ` at ${API_BASE_URL}` : ''}`);
     }
 
     if (!res.ok) {

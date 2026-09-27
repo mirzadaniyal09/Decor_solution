@@ -34,7 +34,11 @@ const envOrigins = (process.env.CLIENT_ORIGIN || '')
     .map((s) => s.trim())
     .filter(Boolean);
 
-const allowedOrigins = [...new Set([...defaultOrigins, ...envOrigins])];
+const vercelOrigins = [process.env.VERCEL_URL, process.env.VERCEL_BRANCH_URL]
+    .filter(Boolean)
+    .map((host) => `https://${host}`);
+
+const allowedOrigins = [...new Set([...defaultOrigins, ...envOrigins, ...vercelOrigins])];
 
 app.use(
     cors({
@@ -59,6 +63,10 @@ app.use(express.urlencoded({ extended: true, limit: bodyLimit }));
 app.use(morgan('dev'));
 
 // Serve uploaded review photos.
+app.use('/api/uploads', (req, res, next) => {
+    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+    next();
+});
 app.use('/api/uploads', express.static(path.resolve(process.cwd(), 'uploads')));
 app.use('/api/uploads', uploadRoutes);
 

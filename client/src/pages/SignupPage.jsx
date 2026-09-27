@@ -45,7 +45,7 @@ export default function SignupPage() {
             <div className="authLayout">
                 <section className="authHero" aria-label="Create account">
                     <div className="authHeroInner">
-                        <div className="authKicker">Decor Solution</div>
+                        <div className="authKicker">Alif Store</div>
                         <h1 className="authHeroTitle">Create your account</h1>
                         <p className="authHeroText">
                             Join to save favorites and get early access to new arrivals.

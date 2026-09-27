@@ -5,6 +5,9 @@
     "type": "module",
     "scripts": {
         "install:all": "npm --prefix server install && npm --prefix client install",
+        "build": "npm --prefix client run build",
+        "install:vercel": "npm install && npm --prefix server install && npm --prefix client install",
+        "build:vercel": "npm --prefix client run build",
         "dev:server": "npm --prefix server run dev",
         "dev:client": "npm --prefix client run dev",
         "seed": "npm --prefix server run seed",

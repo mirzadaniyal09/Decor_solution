@@ -7,7 +7,7 @@ export default function PrivacyPage() {
             <div className="termsCard">
                 <section className="termsSection">
                     <p>
-                        This Privacy Policy describes how Decor Solution (the "Site", "we", "us", or "our") collects, uses, and discloses your personal information when you visit, use our services, or make a purchase from decorsolution.pk (the "Site") or otherwise communicate with us regarding the Site (collectively, the "Services").
+                        This Privacy Policy describes how Alif Store (the "Site", "we", "us", or "our") collects, uses, and discloses your personal information when you visit, use our services, or make a purchase from decorsolution.pk (the "Site") or otherwise communicate with us regarding the Site (collectively, the "Services").
                     </p>
                     <p>
                         Please read this Privacy Policy carefully. By using and accessing any of the Services, you agree to the collection, use, and disclosure of your information as described. If you do not agree, please do not use or access any of the Services.

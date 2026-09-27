@@ -37,7 +37,7 @@ export default function LoginPage() {
             <div className="authLayout">
                 <section className="authHero" aria-label="Welcome">
                     <div className="authHeroInner">
-                        <div className="authKicker">Decor Solution</div>
+                        <div className="authKicker">Alif Store</div>
                         <h1 className="authHeroTitle">Welcome back</h1>
                         <p className="authHeroText">
                             Sign in to track orders, save favorites, and get faster checkout.

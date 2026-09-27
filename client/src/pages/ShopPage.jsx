@@ -34,6 +34,30 @@ function formatReviewCount(n) {
     return `${count} reviews`;
 }
 
+async function fetchAllProducts(filters) {
+    const params = new URLSearchParams({ limit: '48', page: '1' });
+    for (const [key, value] of Object.entries(filters)) {
+        if (value) params.set(key, value);
+    }
+
+    const firstPage = await apiGet(`/api/products?${params}`);
+    const items = Array.isArray(firstPage?.items) ? firstPage.items : [];
+    const pages = Math.max(1, Number(firstPage?.pages || 1));
+    if (pages <= 1) return items;
+
+    const remainingPages = await Promise.all(
+        Array.from({ length: pages - 1 }, (_, index) => {
+            const pageParams = new URLSearchParams(params);
+            pageParams.set('page', String(index + 2));
+            return apiGet(`/api/products?${pageParams}`);
+        })
+    );
+    for (const result of remainingPages) {
+        if (Array.isArray(result?.items)) items.push(...result.items);
+    }
+    return items;
+}
+
 function Stars({ value }) {
     const rating = clamp(Number(value || 0), 0, 5);
     const full = Math.floor(rating);
@@ -70,13 +94,10 @@ export default function ShopPage() {
         let cancelled = false;
         setLoading(true);
         setError('');
-        apiGet(
-            `/api/products?limit=24${q ? `&q=${encodeURIComponent(q)}` : ''}${category ? `&category=${encodeURIComponent(category)}` : ''
-            }${tag ? `&tag=${encodeURIComponent(tag)}` : ''}${sort ? `&sort=${encodeURIComponent(sort)}` : ''}`
-        )
-            .then((data) => {
+        fetchAllProducts({ q, category, tag, sort })
+            .then((products) => {
                 if (cancelled) return;
-                setItems(data.items || []);
+                setItems(products);
             })
             .catch((e) => {
                 if (cancelled) return;
@@ -110,7 +131,7 @@ export default function ShopPage() {
             <div className="shopHero">
                 <div className="shopHeroInner">
                     <div>
-                        <div className="shopKicker">Decor Solution</div>
+                        <div className="shopKicker">Alif Store</div>
                         <h1 className="shopTitle">
                             {category === 'New Arrivals'
                                 ? 'New Arrivals'

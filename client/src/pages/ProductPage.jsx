@@ -4,6 +4,7 @@ import { apiDelete, apiGet, apiPost } from '../lib/api.js';
 import ProductGallery from '../components/ProductGallery.jsx';
 import { getStoredUser } from '../lib/auth.js';
 import RemoteImage from '../components/RemoteImage.jsx';
+import { uploadMediaFiles } from '../lib/uploads.js';
 
 function normalizeColors(colors) {
     if (!Array.isArray(colors)) return [];
@@ -342,12 +343,22 @@ export default function ProductPage() {
         try {
             const hasPhotos = Array.isArray(reviewPhotos) && reviewPhotos.length > 0;
             if (hasPhotos) {
-                const fd = new FormData();
-                if (reviewName.trim()) fd.append('name', reviewName.trim());
-                fd.append('rating', String(ratingNum));
-                if (reviewComment.trim()) fd.append('comment', reviewComment.trim());
-                reviewPhotos.forEach((f) => fd.append('photos', f));
-                await apiPost(`/api/products/${product._id}/reviews`, fd);
+                if (import.meta.env.VITE_UPLOAD_PROVIDER === 'vercel-blob') {
+                    const uploaded = await uploadMediaFiles(reviewPhotos, 'review');
+                    await apiPost(`/api/products/${product._id}/reviews`, {
+                        name: reviewName.trim() || undefined,
+                        rating: ratingNum,
+                        comment: reviewComment.trim() || undefined,
+                        photos: uploaded.files.map((file) => file.url),
+                    });
+                } else {
+                    const fd = new FormData();
+                    if (reviewName.trim()) fd.append('name', reviewName.trim());
+                    fd.append('rating', String(ratingNum));
+                    if (reviewComment.trim()) fd.append('comment', reviewComment.trim());
+                    reviewPhotos.forEach((f) => fd.append('photos', f));
+                    await apiPost(`/api/products/${product._id}/reviews`, fd);
+                }
             } else {
                 await apiPost(`/api/products/${product._id}/reviews`, {
                     name: reviewName.trim() ? reviewName.trim() : undefined,

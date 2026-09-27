@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { apiDelete, apiGet, apiPost, apiPut } from '../lib/api.js';
+import { uploadMediaFiles } from '../lib/uploads.js';
 
 const CATEGORIES = ['New Arrivals', 'Offers', 'Top Sellers', 'Limited Edition'];
 const CURRENCIES = ['USD', 'EUR', 'GBP', 'PKR', 'INR', 'AED'];
@@ -394,9 +395,7 @@ export default function AdminProductsPage() {
         setError('');
         setSaving(true);
         try {
-            const fd = new FormData();
-            fileList.forEach((f) => fd.append('files', f));
-            const res = await apiPost('/api/uploads/product-media', fd);
+            const res = await uploadMediaFiles(fileList, 'admin');
             const uploaded = Array.isArray(res?.files) ? res.files : [];
             const mediaItems = uploaded
                 .map((f) => {
