@@ -27,8 +27,8 @@ const allowedOrigins = [
     'http://localhost:5174',
     'http://localhost:5175',
     'http://localhost:5176',
-    'https://alif-store-umber.vercel.app',
-];
+    process.env.CLIENT_URL,
+].filter(Boolean);
 
 app.use(
     cors({
@@ -36,7 +36,8 @@ app.use(
             if (!origin || allowedOrigins.includes(origin)) {
                 callback(null, true);
             } else {
-                callback(new Error('Not allowed by CORS'));
+                console.error(`CORS blocked for origin: ${origin}`);
+                callback(new Error(`CORS blocked for origin: ${origin}`));
             }
         },
         credentials: true,
