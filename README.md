@@ -24,7 +24,7 @@ Before the first deployment:
 | `JWT_SECRET` | Yes | Long, random secret used to sign authentication tokens |
 | `BLOB_READ_WRITE_TOKEN` | Yes for uploads | Added when a Blob store is connected; used to authorize signed browser uploads |
 | `VITE_UPLOAD_PROVIDER` | Yes for uploads | Set to `vercel-blob` so browser uploads go directly to persistent Blob storage |
-| `CLIENT_ORIGIN` | Custom domains only | Comma-separated frontend origins when using custom domains; Vercel deployment and preview hosts are allowed automatically |
+| `CLIENT_ORIGIN` | Custom domains only | Comma-separated frontend origins; `CLIENT_URL` is also accepted for one origin. Vercel deployment and production hosts are allowed automatically |
 | `VITE_API_BASE_URL` | No | Leave unset for the single-project deployment; the frontend calls `/api` on its own origin |
 
 If the database already references files in a local `uploads/` directory, migrate them before deploying. With `MONGODB_URI` and `BLOB_READ_WRITE_TOKEN` available in the server environment, run `npm run migrate:uploads-to-blob` from `server/`. The script updates product, review, and site-setting media URLs in MongoDB; it does not delete the local source files.

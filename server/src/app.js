@@ -21,14 +21,29 @@ const bodyLimit = process.env.BODY_LIMIT_MB ? `${process.env.BODY_LIMIT_MB}mb` :
 
 app.use(helmet());
 
+const configuredOrigins = [
+    process.env.CLIENT_URL,
+    ...(process.env.CLIENT_ORIGIN || '').split(','),
+]
+    .map((origin) => String(origin || '').trim().replace(/\/+$/, ''))
+    .filter(Boolean);
+
+const vercelOrigins = [
+    process.env.VERCEL_URL,
+    process.env.VERCEL_PROJECT_PRODUCTION_URL,
+]
+    .filter(Boolean)
+    .map((host) => `https://${String(host).replace(/^https?:\/\//, '')}`);
+
 const allowedOrigins = [
     'http://localhost:5073',
     'http://localhost:5173',
     'http://localhost:5174',
     'http://localhost:5175',
     'http://localhost:5176',
-    process.env.CLIENT_URL,
-].filter(Boolean);
+    ...configuredOrigins,
+    ...vercelOrigins,
+];
 
 app.use(
     cors({
