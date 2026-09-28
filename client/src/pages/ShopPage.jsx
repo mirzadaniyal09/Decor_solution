@@ -131,7 +131,7 @@ export default function ShopPage() {
             <div className="shopHero">
                 <div className="shopHeroInner">
                     <div>
-                        <div className="shopKicker">Alif Store</div>
+                        <div className="shopKicker">Decor Solution</div>
                         <h1 className="shopTitle">
                             {category === 'New Arrivals'
                                 ? 'New Arrivals'

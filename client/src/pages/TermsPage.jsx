@@ -7,8 +7,8 @@ export default function TermsPage() {
                 <section className="termsSection">
                     <h2 className="termsHeading">Overview</h2>
                     <p>
-                        This website is operated by Alif Store. Throughout the site, the terms "we", "us" and "our" refer to Alif Store.
-                        Alif Store offers this website, including all information, tools and services available from this site to you, the user,
+                        This website is operated by Decor Solution. Throughout the site, the terms "we", "us" and "our" refer to Decor Solution.
+                        Decor Solution offers this website, including all information, tools and services available from this site to you, the user,
                         conditioned upon your acceptance of all terms, conditions, policies and notices stated here.
                     </p>
                     <p>
@@ -180,7 +180,7 @@ export default function TermsPage() {
                         We do not guarantee that your use of our Service will be uninterrupted, timely, secure or error-free. You expressly agree that your
                         use of, or inability to use, the Service is at your sole risk. The Service and all products and Services delivered to you are
                         provided "as is" and "as available" without any representation, warranties or conditions of any kind, either express or implied.
-                        In no case shall Alif Store be liable for any direct, indirect, incidental, punitive, special, or consequential damages of any
+                        In no case shall Decor Solution be liable for any direct, indirect, incidental, punitive, special, or consequential damages of any
                         kind arising from your use of the Service or any products procured using the Service.
                     </p>
                 </section>
@@ -188,7 +188,7 @@ export default function TermsPage() {
                 <section className="termsSection">
                     <h2 className="termsHeading">Section 14 - Indemnification</h2>
                     <p>
-                        You agree to indemnify, defend and hold harmless Alif Store and our affiliates, partners, officers, directors, agents,
+                        You agree to indemnify, defend and hold harmless Decor Solution and our affiliates, partners, officers, directors, agents,
                         contractors, licensors, service providers, subcontractors, suppliers, interns and employees, harmless from any claim or demand,
                         including reasonable attorneys’ fees, made by any third-party due to or arising out of your breach of these Terms of Service or your
                         violation of any law or the rights of a third-party.

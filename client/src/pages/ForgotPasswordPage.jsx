@@ -30,7 +30,7 @@ export default function ForgotPasswordPage() {
             <div className="authLayout">
                 <section className="authHero" aria-label="Reset password">
                     <div className="authHeroInner">
-                        <div className="authKicker">Alif Store</div>
+                        <div className="authKicker">Decor Solution</div>
                         <h1 className="authHeroTitle">Reset your password</h1>
                         <p className="authHeroText">
                             Enter your email and we’ll send a reset link. In development mode, we’ll show the reset token on this screen.

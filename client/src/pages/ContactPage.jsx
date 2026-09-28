@@ -6,7 +6,7 @@ export default function ContactPage() {
             <div className="contactCard">
                 <div className="contactRow">
                     <span className="contactLabel">Trade name</span>
-                    <span className="contactValue">Alif Store</span>
+                    <span className="contactValue">Decor Solution</span>
                 </div>
 
                 <div className="contactRow">

@@ -49,7 +49,7 @@ export default function ResetPasswordPage() {
             <div className="authLayout">
                 <section className="authHero" aria-label="Set new password">
                     <div className="authHeroInner">
-                        <div className="authKicker">Alif Store</div>
+                        <div className="authKicker">Decor Solution</div>
                         <h1 className="authHeroTitle">Set a new password</h1>
                         <p className="authHeroText">
                             Paste the reset token and choose a new password.
