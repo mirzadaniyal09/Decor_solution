@@ -21,39 +21,23 @@ const bodyLimit = process.env.BODY_LIMIT_MB ? `${process.env.BODY_LIMIT_MB}mb` :
 
 app.use(helmet());
 
-const defaultOrigins = [
+const allowedOrigins = [
     'http://localhost:5073',
     'http://localhost:5173',
     'http://localhost:5174',
     'http://localhost:5175',
     'http://localhost:5176',
+    'https://alif-store-umber.vercel.app',
 ];
-
-const envOrigins = (process.env.CLIENT_ORIGIN || '')
-    .split(',')
-    .map((s) => s.trim())
-    .filter(Boolean);
-
-const vercelOrigins = [process.env.VERCEL_URL, process.env.VERCEL_BRANCH_URL]
-    .filter(Boolean)
-    .map((host) => `https://${host}`);
-
-const allowedOrigins = [...new Set([...defaultOrigins, ...envOrigins, ...vercelOrigins])];
 
 app.use(
     cors({
-        origin(origin, cb) {
-            // Allow non-browser requests (no Origin header)
-            if (!origin) return cb(null, true);
-            if (allowedOrigins.includes(origin)) return cb(null, true);
-
-            // In development, Vite may pick a different port if the default is busy.
-            // Allow localhost loopback origins to avoid dev-time CORS friction.
-            if (process.env.NODE_ENV === 'development') {
-                const isLocalhost = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\]):\d+$/.test(origin);
-                if (isLocalhost) return cb(null, true);
+        origin: function (origin, callback) {
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error('Not allowed by CORS'));
             }
-            return cb(new Error(`CORS blocked for origin: ${origin}`));
         },
         credentials: true,
     })
